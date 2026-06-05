@@ -12,11 +12,15 @@ class ContentEngine:
     def load_and_index_universities(self, uni_data_path):
         with open(uni_data_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            self.universities = data.get("universities", [])
+            self.universities = data if isinstance(data, list) else data.get("universities", [])
 
         if self.universities:
             course_corpus = [
-                f"Degree: {u['degree_name']}. Uni: {u['university']}. Info: {u['description']}"
+                f"Degree: {u['metadata']['degree_name']}. "
+                f"Info: {u['metadata']['description']}. "
+                f"Vibe: {u['ai_semantic_data']['vibe_summary']}. "
+                f"Keywords: {', '.join(u['ai_semantic_data']['curriculum_keywords'])}. "
+                f"Careers: {', '.join(u['ai_semantic_data']['career_outcomes'])}."
                 for u in self.universities
             ]
             embeddings = self.model.encode(course_corpus, convert_to_numpy=True)
@@ -32,4 +36,8 @@ class ContentEngine:
         faiss.normalize_L2(query_vector)
         distances, indices = self.index.search(query_vector, len(self.universities))
 
-        return {self.universities[idx]["id"]: float(dist) for dist, idx in zip(distances[0], indices[0]) if idx != -1}
+        return {
+            self.universities[idx]["id"]: float(dist)
+            for dist, idx in zip(distances[0], indices[0])
+            if idx != -1
+        }

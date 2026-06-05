@@ -81,6 +81,24 @@
         "Running"
       ],
       "lifestyle_notes": "Prefers morning workouts and intense study blocks."
+    },
+    {
+      "student_id": "STU-999",
+      "interests": "I am looking for an advanced software engineering track with heavy machine learning and artificial intelligence coding.",
+      "accepted_or_saved_programs": [],
+      "preferred_sports": [
+        "Weightlifting"
+      ],
+      "lifestyle_notes": "Prefers campus environments with solid fitness facilities."
+    },
+    {
+      "student_id": "STU-LIVE-TEST",
+      "interests": "I am passionate about public policy, critical thinking, societal structures, and political communication.",
+      "accepted_or_saved_programs": [],
+      "preferred_sports": [
+        "Football"
+      ],
+      "lifestyle_notes": "Enjoys active debate circles and community spaces."
     }
   ]
 }

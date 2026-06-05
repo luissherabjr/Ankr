@@ -36,3 +36,13 @@ dist/
 Plaintext
 # AI Model Cache
 backend/ai_engine/model_cache/
+
+# Python bytecode cache
+**/__pycache__/
+*.pyc
+
+# AI Engine Vector and Matrix Cache
+**/model_cache/
+*.faiss
+*.pkl
+*.bin
