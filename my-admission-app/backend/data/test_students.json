@@ -5787,6 +5787,38 @@
       "what_you_want": "Health & medicine",
       "what_you_can_reach": 8.7,
       "gap_to_target_pts": -1.3
+    },
+    {
+      "id": "_1780916979804",
+      "name": "",
+      "school": "",
+      "year": "Year 1",
+      "interest_tags": "",
+      "target_programme_1": "It og økonomi (diplomingeniør)",
+      "motivation_quote": "fsd",
+      "what_you_want": ""
+    },
+    {
+      "id": "luis_1780920022549",
+      "name": "luis",
+      "school": "Copenhagen Business Gymnasium",
+      "year": "Year 1",
+      "gpa": 12.5,
+      "interest_tags": "People, Danish",
+      "target_programme_1": "Civilsamfunds­udvikling",
+      "motivation_quote": "i am thinking about the computer science",
+      "what_you_want": "People"
+    },
+    {
+      "id": "luis_1780931545835",
+      "name": "luis",
+      "school": "Frederiksberg Gymnasium",
+      "year": "Year 1",
+      "interest_tags": "People, English",
+      "target_programme_1": "Retorik",
+      "target_programme_2": "Audio­logopædi",
+      "motivation_quote": "self-learning\n",
+      "what_you_want": "People"
     }
   ]
 }
