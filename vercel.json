@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd my-admission-app/frontend && npm install && npm run build",
+  "outputDirectory": "my-admission-app/frontend/dist",
+  "installCommand": "npm install",
+  "env": {
+    "VITE_API_URL": "@vite_api_url"
+  }
+}
