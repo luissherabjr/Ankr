@@ -50,35 +50,84 @@
   @apply text-xs text-ink-3;
 }
 .checkin-card {
-  @apply mx-4 mt-4 rounded-xl p-5 relative shadow-lg text-white;
+  position: relative;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 18px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #B194F0 0%,
-      #5BA3F5 100%
-    );
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(83, 124, 222, 0.12);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+
+  transition: all 0.25s ease;
 }
 .checkin-dismiss {
   @apply absolute top-3 right-4 text-ink-3 hover:text-white text-xl;
 }
 .checkin-label {
-  @apply font-mono text-[9px] tracking-wide text-ink-4 uppercase mb-2;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(60, 60, 60, 0.6);
+  margin-bottom: 8px;
+  display: block;
 }
 .checkin-q {
-  @apply text-sm mb-3;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 14px;
+  line-height: 1.4;
 }
 .checkin-scale {
   @apply flex gap-2 mb-3;
 }
 .checkin-opt {
-  @apply flex-1 py-2 text-center bg-ink/20 border border-ink/30 rounded-lg text-xl transition-all hover:border-white;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+
+.checkin-opt:hover {
+  transform: translateY(-2px);
+  border-color: rgba(83, 124, 222, 0.4);
+}
+
+.checkin-opt:active {
+  transform: scale(0.95);
 }
 .checkin-opt.selected {
   @apply border-white bg-white/10;
 }
 .checkin-next {
-  @apply w-full py-2 rounded-full text-center border border-ink-3 text-ink-3 cursor-not-allowed;
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px 12px;
+
+  border-radius: 12px;
+  background: #537CDE;
+  color: white;
+
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+.checkin-next:hover {
+  background: #3f66c7;
 }
 .checkin-next.ready {
   @apply border-white text-white hover:bg-white/10 cursor-pointer;
@@ -101,28 +150,33 @@
 .home-focus-due {
   @apply font-mono text-xs text-ink-3;
 }
+
+
 .home-card-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(220px, 1fr)
-  );
-
-  gap: 1rem;
-
-  padding: 0 1rem 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 16px;
 }
-.home-card {
-  @apply rounded-xl p-5 cursor-pointer;
 
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    border-color .25s ease;
+.home-card {
+  border-radius: 18px;
+  padding: 14px;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+}
+.home-position {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  margin: 10px 16px;
+  border-radius: 16px;
+  background: #fff;
 }
 
 .home-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
 }
 .home-card--clay, .home-card--mint {
   @apply bg-white border border-ink/10;
@@ -194,7 +248,14 @@
 .home-card-slim-arrow {
   @apply font-mono text-xs text-ink-3;
 }
-
+.home-position {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  margin: 10px 16px;
+  border-radius: 16px;
+  background: #fff;
+}
 /* ----- Roadmap (canvas, nodes, this week) ----- */
 .rmap-status-bar {
   @apply flex items-center gap-6 px-5 py-4 border-y border-ink/10 bg-white;
@@ -776,5 +837,156 @@
   .req-table {
     display: block;
     overflow-x: auto;
+  }
+}
+
+/* =========================
+   PAGE LAYOUT
+========================= */
+.mentor-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f7f5f2;
+  overflow: hidden;
+}
+
+/* =========================
+   HEADER
+========================= */
+.mentor-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: #f7f5f2;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* =========================
+   CONTEXT BAR
+========================= */
+.mentor-context {
+  padding: 10px 20px;
+  font-size: 12px;
+  color: #555;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: #faf9f7;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* =========================
+   CHAT AREA
+========================= */
+.mentor-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================
+   MESSAGE ROWS
+========================= */
+.msg {
+  display: flex;
+}
+
+.msg--user {
+  justify-content: flex-end;
+}
+
+.msg--ai {
+  justify-content: flex-start;
+}
+
+/* =========================
+   BUBBLES
+========================= */
+.msg-bubble {
+  max-width: 75%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* AI bubble */
+.msg--ai .msg-bubble {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px 16px 16px 4px;
+}
+
+/* User bubble */
+.msg--user .msg-bubble {
+  background: #2f6fed;
+  color: white;
+  border-radius: 16px 16px 4px 16px;
+}
+
+/* =========================
+   INPUT BAR (FIXED)
+========================= */
+.mentor-input-bar {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  background: #ffffff;
+}
+
+.mentor-input {
+  flex: 1;
+  resize: none;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  max-height: 120px;
+}
+
+.mentor-input:focus {
+  border-color: #2f6fed;
+}
+
+.mentor-send {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  background: #2f6fed;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mentor-send:hover {
+  background: #1f55c4;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .mentor-chat {
+    padding: 14px;
+  }
+
+  .msg-bubble {
+    max-width: 85%;
+    font-size: 13px;
+  }
+
+  .mentor-input-bar {
+    padding: 10px;
   }
 }

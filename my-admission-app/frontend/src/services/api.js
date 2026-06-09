@@ -1,52 +1,101 @@
-// src/services/api.js
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-// Get programme recommendations (optional – keep if needed)
-export async function getRecommendations(query, k = 10) {
-  const response = await fetch(`${API_URL}/api/recommend`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, k, graph_weight: 0.6 }),
+/* =========================
+   CORE REQUEST WRAPPER
+========================= */
+async function request(endpoint, options = {}) {
+  const res = await fetch(`${API_URL}${endpoint}`, {
+    method: options.method || "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    body: options.body || undefined
   });
-  if (!response.ok) throw new Error("Recommendation request failed");
-  return await response.json();
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(errorText || "API request failed");
+  }
+
+  return res.json();
 }
 
-// Save a student profile
+/* =========================
+   STUDENT API
+========================= */
 export async function saveStudentProfile(profile) {
-  const response = await fetch(`${API_URL}/api/students`, {
+  return request("/api/students", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(profile),
+    body: JSON.stringify(profile)
   });
-  if (!response.ok) throw new Error("Saving profile failed");
-  return await response.json();
 }
 
-// Fetch all programmes from the backend
+export async function fetchStudentProfile(studentId) {
+  return request(`/api/students/${encodeURIComponent(studentId)}`);
+}
+
+export async function fetchAllStudents(stage = null) {
+  return request(
+    stage
+      ? `/api/students?stage=${encodeURIComponent(stage)}`
+      : "/api/students"
+  );
+}
+
+/* =========================
+   PROGRAMME API
+========================= */
 export async function fetchProgrammes() {
-  const response = await fetch(`${API_URL}/api/programmes`);
-  if (!response.ok) throw new Error("Fetching programmes failed");
-  return await response.json();
+  return request("/api/programmes");
 }
 
-// Alias for saveStudentProfile (for existing Onboarding code)
+export async function getRecommendations(query, k = 10) {
+  return request("/api/recommend", {
+    method: "POST",
+    body: JSON.stringify({
+      query,
+      k,
+      graph_weight: 0.6
+    })
+  });
+}
+
+/* =========================
+   MENTOR (HYBRID AI LAYER)
+========================= */
+export async function getMentorReply(message, userData) {
+  return request("/api/mentor/chat", {
+    method: "POST",
+    body: JSON.stringify({
+      message,
+      userData
+    })
+  });
+}
+
+export async function getMentorInsights(userData) {
+  return request("/api/mentor/insights", {
+    method: "POST",
+    body: JSON.stringify({ userData })
+  });
+}
+
+/* =========================
+   BACKWARD COMPATIBILITY
+========================= */
 export const saveOnboardingData = saveStudentProfile;
 
-export default { getRecommendations, saveStudentProfile, fetchProgrammes, saveOnboardingData };
-
-// Fetch a student profile by ID (or email)
-export async function fetchStudentProfile(studentId) {
-  const response = await fetch(`${API_URL}/api/students/${encodeURIComponent(studentId)}`);
-  if (response.status === 404) return null;
-  if (!response.ok) throw new Error("Failed to fetch student profile");
-  return await response.json();
-}
-
-// Fetch all student profiles (optionally by stage)
-export async function fetchAllStudents(stage = null) {
-  const url = stage ? `${API_URL}/api/students?stage=${encodeURIComponent(stage)}` : `${API_URL}/api/students`;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error('Failed to fetch students');
-  return await response.json();
-}
+/* =========================
+   DEFAULT EXPORT (KEEP YOUR STYLE)
+========================= */
+export default {
+  getRecommendations,
+  saveStudentProfile,
+  fetchProgrammes,
+  saveOnboardingData,
+  fetchStudentProfile,
+  fetchAllStudents,
+  getMentorReply,
+  getMentorInsights
+};
